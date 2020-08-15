@@ -1,0 +1,27 @@
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+/* Make footer sticky */
+main {
+	flex: 1 0 auto;
+}
+
+section aside {
+	margin-top: 5%;
+}
+
+.overflow-hidden {
+	overflow: hidden;
+}
+
+/**********/
+/* Footer */
+/**********/
+
+/* Clear padding on MaterializeCSS class */
+.page-footer {
+	padding-top: 0;
+}

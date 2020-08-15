@@ -1,0 +1,37 @@
+<html>
+	<head>
+		{% if title %}
+		<title>{{ title }}</title>
+		{% else %}
+		<title>Welcome</title>
+		{% endif %}
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Compiled and minified CSS -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+	</head>
+	<body class="{{ 'overflow-hidden' if full_page_width }}">
+		<!-- Header -->
+		{% include '_layout/_header.html' %}
+
+		<!-- Main -->
+		<main class="main container">
+			<!-- Flashed messages -->
+			{% include '_layout/_flash_messages.html' %}
+
+			<!-- Block content -->
+			{% block content %} {% endblock %}
+		</main>
+
+		<!-- Footer -->
+		{% include '_layout/_footer.html' %}
+
+		<!-- Compiled and minified JavaScript -->
+		<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+	</body>
+</html>

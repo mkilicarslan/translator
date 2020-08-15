@@ -1,0 +1,9 @@
+<section id="flash-messages" class="flash-messages">
+  {% with messages = get_flashed_messages() %} 
+  {% if messages %}
+    {% for message in messages %}
+    <span class="flash-messages__item">{{message}}</span>
+    {% endfor %}
+  {% endif %} 
+  {% endwith %}
+</section>
