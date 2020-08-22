@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+<!-- start block -->
+{% block content %}
+<div class="container">
+  <div class="container">
+    <br /><br />
+    <h2>Register</h2>
+    <form action="" method="POST">
+      {{ form.hidden_tag() }}
+      <!-- Email -->
+      {% include "_partials/form/email.html" %}
+      <!-- Password -->
+      {% with password_confirm = True %}
+      <!--  -->
+      {% include "_partials/form/password.html" %}
+      <!--  -->
+      {% endwith %}
+      <!-- Submit -->
+      {% include "_partials/form/submit.html" %}
+    </form>
+
+    <p>
+      Already registered?
+      <a href="{{ url_for('auth.login') }}">Click to Login!</a>
+    </p>
+  </div>
+</div>
+
+<!-- end block -->
+{% endblock %}

@@ -1,0 +1,9 @@
+<div class="input-field">
+  {{ form.email.label }} {{ form.email(size=64, class="validate") }}
+  <!--  -->
+  {% for error in form.email.errors %}
+  <span class="helper-text" data-error="" data-success="">
+    {{ error }}
+  </span>
+  {% endfor %}
+</div>

@@ -6,4 +6,5 @@ from app import app
 # BUCKET_NAME = app.config['AWS_S3_BUCKET']
 
 AWS_Translate = boto3.client(service_name='translate')
-# AWS_Polly = boto3.client(service_name='polly')
+AWS_Polly = boto3.client(service_name='polly')
+AWS_Transcribe = boto3.client(service_name='transcribe')
