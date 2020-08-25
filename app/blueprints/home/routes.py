@@ -1,8 +1,11 @@
 from flask import render_template, request, send_file
+from flask_login import current_user
 from . import bp
 from .forms import TranslateForm
-from ...helpers.aws import AWS_Translate, AWS_Polly, AWS_Transcribe
-from ...constants.languages import Languages
+from app.helpers.aws import AWS_Translate, AWS_Polly, AWS_Transcribe
+from app.constants.languages import Languages
+from app.models import User, Translation
+from app import db
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -11,6 +14,12 @@ def index():
     to_lang = 'fr'
 
     form = TranslateForm()
+
+    last_translations = []
+    if not current_user.is_anonymous:
+        last_translations = Translation.query.filter_by(
+            user_id=current_user.id).order_by(
+            Translation.time.desc()).limit(10).all()
 
     # TODO: Error handling for incorrect input
     # Detect language
@@ -26,15 +35,27 @@ def index():
         )
         translated_text = response.get('TranslatedText')
 
+        # Add translation to DB
+        translation = Translation(
+            lang_from=from_lang,
+            lang_detected=from_lang,
+            lang_to=to_lang,
+            text_from=text,
+            text_to=translated_text,
+        )
+        if not current_user.is_anonymous:
+            translation.user_id = current_user.id
+        db.session.add(translation)
+        db.session.commit()
         return render_template(
             'home/index.html', title='Home', form=form, languages=Languages, from_lang=from_lang, to_lang=to_lang,
             text=text, translated_text=translated_text)
 
     form.lang_from.data = (from_lang)
     form.lang_to.data = (to_lang)
-
     return render_template(
-        'home/index.html', title='Home', languages=Languages, form=form, from_lang=from_lang, to_lang=to_lang)
+        'home/index.html', title='Home', languages=Languages, form=form, from_lang=from_lang, to_lang=to_lang,
+        last_translations=last_translations)
 
 
 # @bp.route('/voice', methods=['GET', 'POST'])

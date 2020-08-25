@@ -37,4 +37,4 @@ class Translation(db.Model):
     user_id = Column(Integer, ForeignKey('users.id'))
 
     def __repr__(self):
-        return '<Translation {}>'.format(self.body)
+        return f'<Translation {self.text_from}>'

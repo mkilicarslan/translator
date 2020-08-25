@@ -36,7 +36,15 @@
 <div class="section">
 	<!--   Icon Section   -->
 	<div class="row">
+		{% if current_user.is_anonymous %}
 		<h4 class="center-align">Sign up to save your translation history!</h4>
+		{% else %}
+		<h4>Your latest translations:</h4>
+		{% for i in last_translations %}
+		
+		<blockquote><strong>({{i.lang_from}} -> {{i.lang_to}})</strong> {{i.text_from}}</blockquote>
+		{% endfor %}
+		{% endif %}
 	</div>
 </div>
 <!-- end block  -->
