@@ -4,48 +4,103 @@
 {% block content %}
 
 <div class="section no-pad-bot" id="index-banner">
+	<div class="row center-align">
+		<form class="col s12" method="POST">
+			{{form.hidden_tag()}}
+			<div class="row">
+				<div class="card col s12">
+					<div class="card-content">
+						<button
+							tabindex="0"
+							id="translate-button"
+							class="waves-effect waves-light btn orange lighten-1"
+						>
+							Translate
+						</button>
 
-		<div class="row center-align">
-			<form class="col s12" method="POST">
-				{{form.hidden_tag()}}
-				<br>
-				<button class="waves-effect waves-light btn indigo">Submit</button>
-				<br>
-				<div class="row">
-					<div class="input-field col s5">
-						{{form.lang_from}}
+						<div class="input-field col s12">
+							<div class="input-field col s5">{{form.lang_from}}</div>
+							<div class="input-field col s2">
+								<i tabindex="0" id="exchange-languages" class="medium material-icons grey-text"
+									>swap_horiz</i
+								>
+							</div>
+							<div class="input-field col s5">{{form.lang_to}}</div>
+						</div>
+						<div class="input-field col s6">
+							{{form.text(class_="text-from materialize-textarea")}}
+							<i
+								id="start-dictation"
+								tabindex="0"
+								style="position: absolute; right: 1rem; bottom: 0.8rem"
+								class="small material-icons grey-text"
+								>keyboard_voice</i
+							>
+						</div>
 
-						{{form.text(class_="materialize-textarea")}}
-					</div>
-					<div class="input-field col s2">
-						<i class="medium material-icons">swap_horiz</i>
-					</div>
-
-					<div class="input-field col s5">
-						{{form.lang_to}}
-
-						<textarea disabled id="text-to" class="materialize-textarea">{{translated_text}}</textarea>
-						<label for="text-to"></label>
+						<div class="input-field col s6">
+							<textarea disabled id="text-to" class="materialize-textarea grey lighten-4">
+{{translated_text}}</textarea
+							>
+							<label for="text-to"></label>
+							<i
+								id="start-speech"
+								tabindex="0"
+								style="position: absolute; right: 1rem; bottom: 0.8rem"
+								class="small material-icons grey-text"
+								>volume_up</i
+							>
+						</div>
 					</div>
 				</div>
-			</form>
-		</div>
-	</div>
-</div>
+			</div>
+		</form>
 
-<div class="section">
-	<!--   Icon Section   -->
-	<div class="row">
-		{% if current_user.is_anonymous %}
-		<h4 class="center-align">Sign up to save your translation history!</h4>
-		{% else %}
-		<h4>Your latest translations:</h4>
-		{% for i in last_translations %}
-		
-		<blockquote><strong>({{i.lang_from}} -> {{i.lang_to}})</strong> {{i.text_from}}</blockquote>
-		{% endfor %}
-		{% endif %}
+		<div class="section">
+			<!--   Icon Section   -->
+			{#
+			<div class="row">
+				<div class="card">
+					<div class="card-content">
+						{% if current_user.is_anonymous %}
+						<h4 class="center-align">Sign up to save your translation history!</h4>
+						{% else %}
+						<h4>Your latest translations:</h4>
+						{% for i in last_translations %}
+						<blockquote><strong>({{i.lang_from}} -> {{i.lang_to}})</strong> {{i.text_from}}</blockquote>
+						{% endfor %}
+						<!--  -->
+						{% endif %}
+					</div>
+				</div>
+			</div>
+			#}
+
+			<div class="col s12">
+				<h2 class="header">About TransLang</h2>
+				<div class="card horizontal">
+					<div class="card-image">
+						<img src="https://ece.uwaterloo.ca/~dwharder/Flags/images/fotw.1000.png" />
+					</div>
+					<div class="card-stacked">
+						<div class="card-content">
+							<p>
+								TransLang is a translation service based on cloud machine learning APIs that provides a
+								convenient way to translate between hundreads of pairs of languages
+							</p>
+						</div>
+						<div class="card-action">
+							{% if current_user.is_anonymous %}
+							<a href="{{url_for('auth.register')}}"> Sign up to save your translation history </a>
+							{% else %}
+							<a href="{{url_for('dashboard.dashboard')}}"> View your translation history </a>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end block  -->
+		{% endblock %}
 	</div>
 </div>
-<!-- end block  -->
-{% endblock %}

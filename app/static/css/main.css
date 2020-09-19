@@ -30,3 +30,7 @@ section aside {
 #text-to {
 	color: #000;
 }
+
+.grey-text:hover {
+	color: #222 !important;
+}

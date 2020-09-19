@@ -20,6 +20,9 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def get_latest_translations(self, num=10):
+        return Translation.query.filter_by(user_id=self.id).order_by(Translation.time.desc()).limit(10).all()
+
     def __repr__(self):
         return f'<User {self.email}>'
 

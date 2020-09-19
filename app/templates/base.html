@@ -12,6 +12,20 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}" />
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+		<style>
+			#translate-button:focus {
+				outline: 3px solid #1565c0 !important;
+			}
+			#exchange-languages:hover {
+				cursor: pointer;
+			}
+			#start-speech:hover {
+				cursor: pointer;
+			}
+			#start-dictation:hover {
+				cursor: pointer;
+			}
+		</style>
 	</head>
 	<body class="{{ 'overflow-hidden' if full_page_width }}">
 		<!-- Header -->
@@ -33,5 +47,61 @@
 		<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/materialize.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+		<script>
+			function startDictation() {
+				if (window.hasOwnProperty("webkitSpeechRecognition")) {
+					var recognition = new webkitSpeechRecognition();
+					recognition.continuous = false;
+					recognition.interimResults = false;
+					recognition.lang = document.getElementById("lang_from").value;
+					recognition.start();
+
+					recognition.onresult = function (e) {
+						document.getElementsByClassName("text-from")[0].value = e.results[0][0].transcript;
+						recognition.stop();
+					};
+					recognition.onerror = function (e) {
+						recognition.stop();
+					};
+				}
+			}
+			var startDictationIcon = document.querySelector("#start-dictation");
+			startDictationIcon.addEventListener("click", startDictation);
+			startDictationIcon.addEventListener("keyup", function () {
+				if (event.keyCode === 13) {
+					startDictation();
+				}
+			});
+
+			function startSpeech() {
+				var synth = window.speechSynthesis;
+				text = document.getElementById("text-to").value;
+				var utterThis = new SpeechSynthesisUtterance(text);
+				utterThis.lang = document.getElementById("lang_to").value;
+				synth.speak(utterThis);
+			}
+			var startSpeechIcon = document.querySelector("#start-speech");
+			startSpeechIcon.addEventListener("click", startSpeech);
+			startSpeechIcon.addEventListener("keyup", function () {
+				if (event.keyCode === 13) {
+					startSpeech();
+				}
+			});
+
+			var exchangeLanguagesIcon = document.querySelector("#exchange-languages");
+			function exchangeLanguages() {
+				var langTo = $("#lang_to").val();
+				var langFrom = $("#lang_from").val();
+				$("#lang_to").val(langFrom);
+				$("#lang_from").val(langTo);
+				$("select").formSelect();
+			}
+			exchangeLanguagesIcon.addEventListener("click", exchangeLanguages);
+			exchangeLanguagesIcon.addEventListener("keyup", function () {
+				if (event.keyCode === 13) {
+					exchangeLanguages();
+				}
+			});
+		</script>
 	</body>
 </html>

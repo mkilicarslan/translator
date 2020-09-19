@@ -15,11 +15,7 @@ def index():
 
     form = TranslateForm()
 
-    last_translations = []
-    if not current_user.is_anonymous:
-        last_translations = Translation.query.filter_by(
-            user_id=current_user.id).order_by(
-            Translation.time.desc()).limit(10).all()
+    last_translations = current_user.get_latest_translations(10) if not current_user.is_anonymous else []
 
     # TODO: Error handling for incorrect input
     # Detect language
@@ -49,7 +45,7 @@ def index():
         db.session.commit()
         return render_template(
             'home/index.html', title='Home', form=form, languages=Languages, from_lang=from_lang, to_lang=to_lang,
-            text=text, translated_text=translated_text)
+            text=text, translated_text=translated_text, last_translations=last_translations)
 
     form.lang_from.data = (from_lang)
     form.lang_to.data = (to_lang)
