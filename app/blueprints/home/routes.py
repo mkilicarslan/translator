@@ -8,8 +8,9 @@ from app.models import User, Translation
 from app import db
 
 
-@bp.route('/', methods=['GET', 'POST'])
-def index():
+@bp.route('/', defaults={'translation_id': None}, methods=['GET', 'POST'])
+@bp.route('/translations/<translation_id>', methods=['GET', 'POST'])
+def index(translation_id):
     from_lang = 'en'
     to_lang = 'fr'
 
@@ -47,11 +48,14 @@ def index():
             'home/index.html', title='Home', form=form, languages=Languages, from_lang=from_lang, to_lang=to_lang,
             text=text, translated_text=translated_text, last_translations=last_translations)
 
-    form.lang_from.data = (from_lang)
-    form.lang_to.data = (to_lang)
+    translation = Translation.query.filter_by(id=translation_id).first()
+
+    form.lang_from.data = ((translation and translation.lang_from) or from_lang)
+    form.lang_to.data = ((translation and translation.lang_to) or to_lang)
+
     return render_template(
         'home/index.html', title='Home', languages=Languages, form=form, from_lang=from_lang, to_lang=to_lang,
-        last_translations=last_translations)
+        last_translations=last_translations, translation=translation)
 
 
 # @bp.route('/voice', methods=['GET', 'POST'])

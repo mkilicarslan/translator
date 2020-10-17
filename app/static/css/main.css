@@ -34,3 +34,14 @@ section aside {
 .grey-text:hover {
 	color: #222 !important;
 }
+
+.previous_trans {
+	color: black;
+}
+.previous_trans:hover {
+	color: blue;
+}
+
+.previous_trans:hover {
+	text-decoration: underline;
+}

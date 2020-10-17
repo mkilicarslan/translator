@@ -66,12 +66,14 @@
 				}
 			}
 			var startDictationIcon = document.querySelector("#start-dictation");
-			startDictationIcon.addEventListener("click", startDictation);
-			startDictationIcon.addEventListener("keyup", function () {
-				if (event.keyCode === 13) {
-					startDictation();
-				}
-			});
+			if (startDictationIcon) {
+				startDictationIcon.addEventListener("click", startDictation);
+				startDictationIcon.addEventListener("keyup", function () {
+					if (event.keyCode === 13) {
+						startDictation();
+					}
+				});
+			}
 
 			function startSpeech() {
 				var synth = window.speechSynthesis;
@@ -81,14 +83,15 @@
 				synth.speak(utterThis);
 			}
 			var startSpeechIcon = document.querySelector("#start-speech");
-			startSpeechIcon.addEventListener("click", startSpeech);
-			startSpeechIcon.addEventListener("keyup", function () {
-				if (event.keyCode === 13) {
-					startSpeech();
-				}
-			});
+			if (startSpeechIcon) {
+				startSpeechIcon.addEventListener("click", startSpeech);
+				startSpeechIcon.addEventListener("keyup", function () {
+					if (event.keyCode === 13) {
+						startSpeech();
+					}
+				});
+			}
 
-			var exchangeLanguagesIcon = document.querySelector("#exchange-languages");
 			function exchangeLanguages() {
 				var langTo = $("#lang_to").val();
 				var langFrom = $("#lang_from").val();
@@ -96,12 +99,15 @@
 				$("#lang_from").val(langTo);
 				$("select").formSelect();
 			}
-			exchangeLanguagesIcon.addEventListener("click", exchangeLanguages);
-			exchangeLanguagesIcon.addEventListener("keyup", function () {
-				if (event.keyCode === 13) {
-					exchangeLanguages();
-				}
-			});
+			var exchangeLanguagesIcon = document.querySelector("#exchange-languages");
+			if (exchangeLanguagesIcon) {
+				exchangeLanguagesIcon.addEventListener("click", exchangeLanguages);
+				exchangeLanguagesIcon.addEventListener("keyup", function () {
+					if (event.keyCode === 13) {
+						exchangeLanguages();
+					}
+				});
+			}
 		</script>
 	</body>
 </html>

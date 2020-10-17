@@ -33,13 +33,15 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is None:
-            flash('Email address not found')
+            flash('Email address not found', 'error')
             return redirect(url_for('auth.login'))
         if not user.check_password(form.password.data):
-            flash('Invalid password')
+            flash('Invalid password', 'error')
             return redirect(url_for('auth.login'))
 
         login_user(user, remember=form.remember_me.data)
+        flash('You have successfully logged in')
+
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('home.index')
@@ -50,6 +52,8 @@ def login():
 @bp.route('/logout')
 def logout():
     logout_user()
+    flash('You have successfully logged out')
+
     return redirect(url_for('home.index'))
 
 

@@ -19,16 +19,17 @@
 						</button>
 
 						<div class="input-field col s12">
-							<div class="input-field col s5">{{form.lang_from}}</div>
-							<div class="input-field col s2">
+							<div class="input-field col s12 m5">{{form.lang_from}}</div>
+							<div class="input-field col s12 m2">
 								<i tabindex="0" id="exchange-languages" class="medium material-icons grey-text"
 									>swap_horiz</i
 								>
 							</div>
-							<div class="input-field col s5">{{form.lang_to}}</div>
+							<div class="input-field col s12 m5 ">{{form.lang_to}}</div>
 						</div>
-						<div class="input-field col s6">
-							{{form.text(class_="text-from materialize-textarea")}}
+						<div class="input-field col s12 m6">
+							<textarea class="text-from materialize-textarea">{{translation.text_from or ''}}</textarea>
+
 							<i
 								id="start-dictation"
 								tabindex="0"
@@ -38,9 +39,9 @@
 							>
 						</div>
 
-						<div class="input-field col s6">
+						<div class="input-field col s12 m6">
 							<textarea disabled id="text-to" class="materialize-textarea grey lighten-4">
-{{translated_text}}</textarea
+{{translation.text_to or translated_text}}</textarea
 							>
 							<label for="text-to"></label>
 							<i

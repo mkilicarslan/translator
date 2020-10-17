@@ -24,8 +24,10 @@
 			{% for t in latest_translations %}
 			<li class="collection-item">
 				<div>
-					<strong>({{t.lang_from}} -> {{t.lang_to}})</strong> {{t.text_from}} {#
-					<a href="#!" class="secondary-content"><i class="material-icons">send</i></a> #}
+					<a class="previous_trans" href="{{url_for('home.index', translation_id=t.id)}}">
+						<strong>({{t.lang_from}} -> {{t.lang_to}})</strong> {{t.text_from}} {#
+						<a href="#!" class="secondary-content"><i class="material-icons">send</i></a> #}
+					</a>
 				</div>
 			</li>
 
